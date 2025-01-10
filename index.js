@@ -10,12 +10,10 @@ const minimatch = require('minimatch'); // Модуль для проверки 
 const IMPORT_USE_RE = /^([ \t]*(?:\/\*.*)?)@(import|use|forward)\s+["']([^"']+\*[^"']*(?:\.scss|\.sass)?)["'];?([ \t]*(?:\/[/*].*)?)$/gm;
 
 // Функция для преобразования путей в формат с прямыми слэшами
-function toForwardSlash(p) {
-	return p.split(path.sep).join('/');
-}
+const slash = (pth) => pth.split(path.sep).join('/');
 
 // Основная функция
-function gulpSassGlob(options = {}) {
+function gulpGlobSass(options = {}) {
 	return through.obj((file, env, callback) => transform(file, env, callback, options));
 }
 
@@ -38,15 +36,15 @@ function transform(file, env, callback, options = {}) {
 			const [rule, startComment, directive, globPattern, endComment] = result; // Деструктуризация результата
 
 			const files = searchBases.reduce((acc, basePath) => {
-				const absoluteBasePath = path.join(baseDir, basePath); // Абсолютный путь для поиска
-				const matchedFiles = glob.sync(path.join(absoluteBasePath, globPattern), { cwd: absoluteBasePath }); // Ищем файлы
+				const absoluteBasePath = slash(path.join(baseDir, basePath)); // Абсолютный путь для поиска
+				const matchedFiles = glob.sync(slash(path.join(absoluteBasePath, globPattern)), { cwd: absoluteBasePath }); // Ищем файлы
 				return acc.length ? acc : matchedFiles; // Используем файлы из первого подходящего каталога
 			}, []);
 
 			const directives = files
 				.filter(filename => filename !== file.path && isSassOrScss(filename)) // Исключаем текущий файл и нерелевантные файлы
 				.filter(filename => !ignorePaths.some(ignorePath => minimatch(filename, ignorePath))) // Исключаем файлы из ignorePaths
-				.map(filename => `@${directive} "${toForwardSlash(path.relative(relativeBase, filename))}"${isSass ? '' : ';'}`); // Генерация строк @import или @use
+				.map(filename => `@${directive} "${slash(path.relative(relativeBase, filename))}"${isSass ? '' : ';'}`); // Генерация строк @import или @use
 
 			if (startComment) directives.unshift(startComment); // Добавляем комментарий перед конструкцией
 			if (endComment) directives.push(endComment); // Добавляем комментарий после конструкции
@@ -65,4 +63,4 @@ function isSassOrScss(filename) {
 }
 
 // Экспортируем функцию для использования через require
-module.exports = gulpSassGlob;
+module.exports = gulpGlobSass;

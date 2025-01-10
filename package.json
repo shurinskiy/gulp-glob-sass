@@ -1,6 +1,6 @@
 {
   "name": "gulp-glob-sass",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,7 +23,7 @@
   "homepage": "https://github.com/shurinskiy/gulp-glob-sass",
   "description": "The gulpSassGlob plugin simplifies working with SASS/SCSS files by automatically replacing @import, @use, and @forward constructs using templates with an actual list of matching files. This helps automate and simplify the inclusion of style files in projects.",
   "dependencies": {
-    "glob": "^11.0.0",
+    "glob": "^9.3.3",
     "minimatch": "^10.0.1",
     "through2": "^4.0.2"
   }

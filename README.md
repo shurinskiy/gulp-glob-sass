@@ -1,16 +1,16 @@
 # Guide to Using the `gulpGlobSass` Plugin
 
-The `v` plugin simplifies working with SASS/SCSS files by automatically replacing `@import`, `@use`, and `@forward` constructions that use glob patterns with an actual list of matching files. This helps automate and streamline the process of including style files in projects. Based on [gulp-sass-glob](https://www.npmjs.com/package/gulp-sass-glob) plugin. Added support for @use and @forward. Added base directory setting.
+The plugin simplifies working with SASS/SCSS files by automatically replacing `@import`, `@use`, and `@forward` constructions that use glob patterns with an actual list of matching files. This helps automate and streamline the process of including style files in projects. Based on [gulp-sass-glob](https://www.npmjs.com/package/gulp-sass-glob) plugin. Added support for @use and @forward. Added base directory setting.
 
 ---
 
 ## Installation
 
-1. **Download the plugin**: Save the plugin code to a file, for example, `gulp-sass-glob.js`.
+1. **Download the plugin**.
 2. **Install the required dependencies (It will be automatic)**:
 
 ```bash
-npm install gulp-sass-glob --save-dev
+npm install gulp-glob-sass -D
 ```
 
 3. **Include the plugin in your project**.
@@ -21,13 +21,13 @@ npm install gulp-sass-glob --save-dev
 
 1. **Import the plugin**:
 ```javascript
-const gulpGlobSass = require('./path-to-plugin/gulp-sass-glob');
+const gulpGlobSass = require('gulp-glob-sass');
 ```
 
 2. **Example Gulp task**:
 ```javascript
 const gulp = require('gulp');
-const gulpGlobSass = require('./path-to-plugin/gulp-sass-glob');
+const gulpGlobSass = require('gulp-glob-sass');
 const sass = require('gulp-sass')(require('sass')); // Example with Gulp Sass
 
 gulp.task('styles', () => {
